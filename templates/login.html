@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block subtitle %}
+Login to Your Account
+{% endblock %}
+
+{% block content %}
+<div class="col-md-12">
+    <h2 style="color: #fff;">Login</h2>
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+            <label for="username" style="color: #fff;">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password" style="color: #fff;">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
+{% endblock %}

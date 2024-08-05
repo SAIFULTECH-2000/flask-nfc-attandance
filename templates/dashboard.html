@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | FRSCVD
+{% endblock %}
+
+{% block subtitle %}
+Hello, {{ session.get('username') }}
+{% endblock %}
+
+{% block content %}
+<div class="col-custom1 boxShadow-top form-group">
+    <div class="row">
+        <div class="col-12 mb-3">
+            <button type="button" onclick="location.href='{{url_for('register_student')}}'"
+                class="btn-outline-info btn-block but-color-navy-blue">
+                Register Student<i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <button type="button" onclick="location.href='{{url_for('list_students')}}'"
+                class="btn-outline-info btn-block but-color-navy-blue">
+                List Student <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <button type="button" onclick="location.href='{{url_for('view_attendance')}}'"
+                class="btn-outline-info btn-block but-color-navy-blue">
+                Student Attendance <i class="fa fa-user-circle fa-lg" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block message %}
+<script>
+    {
+        %
+        if session.get('message') %
+    }
+    var flashdata = "{{ session.get('message') }}";
+    if (flashdata) {
+        Swal.fire({
+            title: 'Success!',
+            text: flashdata,
+            icon: 'success',
+            confirmButtonText: 'Close'
+        });
+    } {
+        %
+        endif %
+    }
+</script>
+{% endblock %}

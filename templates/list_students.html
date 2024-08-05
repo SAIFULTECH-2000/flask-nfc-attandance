@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+List of Students
+{% endblock %}
+
+{% block content %}
+<div class="col boxShadow form-group" style="background-color: white;border-radius: 25px;">
+    <div class="txt-title">
+        <h2>List Student</h2>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.attendance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <a href="../dashboard">Back</a>
+</div>
+{% endblock %}
