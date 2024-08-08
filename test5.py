@@ -31,25 +31,7 @@ def main():
         def on_connect(tag):
             data = read_nfc(tag)
             if data:
-                # Dapatkan tarikh dan waktu semasa
-                current_date = datetime.now().strftime('%Y-%m-%d')
-                current_time = datetime.now().strftime('%H:%M:%S')
-                
-                # Sediakan data untuk disimpan
-                nfc_data = {
-                    'NAMA': data[0],
-                    'KELAS': data[1] if len(data) > 1 else 'Unknown',
-                    'TARIKH': current_date,
-                    'WAKTU MASUK': current_time
-                }
-                
-                # Simpan data ke dalam DataFrame
-                df = pd.DataFrame([nfc_data])
-                print("DataFrame created:", df)
-                
-                # Simpan DataFrame ke dalam CSV
-                df.to_csv('nfc_data.csv', index=False, mode='a', header=False)
-                print("Data saved to nfc_data.csv")
+                print("Data read from NFC tag:", data)
         
         clf.connect(rdwr={'on-connect': on_connect})
         
