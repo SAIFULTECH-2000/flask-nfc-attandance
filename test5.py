@@ -1,7 +1,7 @@
 import nfc
 
 def list_devices():
-    with nfc.ContactlessFrontend('pcsc') as clf:
+    with nfc.ContactlessFrontend('usb') as clf:
         print("NFC reader initialized. Listing devices...")
         print(clf.list_devices())
 
