@@ -1,6 +1,4 @@
 import nfc
-import pandas as pd
-from datetime import datetime
 
 def read_nfc(tag):
     print("Tag detected")
