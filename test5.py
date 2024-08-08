@@ -14,7 +14,7 @@ def on_connect(tag):
 
 def main():
     try:
-        # Initialize the NFC reader using 'usb' backend
+        # Try different backends if 'usb' does not work
         clf = nfc.ContactlessFrontend('usb')
         print("NFC reader initialized. Waiting for NFC tag...")
 
