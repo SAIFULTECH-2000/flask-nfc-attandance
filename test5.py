@@ -10,7 +10,7 @@ def connected(tag):
 def main():
     try:
         # Initialize the NFC reader
-        clf = ContactlessFrontend('pcsc')
+        clf = ContactlessFrontend('usb')
         print("NFC reader initialized. Waiting for tags...")
         
         while True:
