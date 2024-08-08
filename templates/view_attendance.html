@@ -37,32 +37,39 @@ View Attendance
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const reader = new nfc.ContactlessFrontend('usb');
+    document.addEventListener('DOMContentLoaded', () => {
+        if ('NFCReader' in window) {
+            const nfc = new NFCReader();
 
-        reader.on('tag', (tag) => {
-            const nfc_card_id = tag.id;
-            fetch('/api/save_attendance', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        nfc_card_id
+            nfc.addEventListener('reading', event => {
+                const tag = event.tag;
+                const nfc_card_id = tag.id;
+
+                fetch('/api/save_attendance', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            nfc_card_id
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Attendance record saved successfully!');
-                        location.reload(); // Refresh the page to show the new attendance record
-                    } else {
-                        alert(data.error || 'Failed to save attendance record');
-                    }
-                });
-        });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Attendance record saved successfully!');
+                            location
+                                .reload(); // Refresh the page to show the new attendance record
+                        } else {
+                            alert(data.error || 'Failed to save attendance record');
+                        }
+                    });
+            });
 
-        reader.listen();
+            nfc.start();
+        } else {
+            console.log('Web NFC is not supported on this device.');
+        }
     });
 </script>
 {% endblock %}
