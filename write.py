@@ -1,15 +1,13 @@
 import nfc
-import nfc.ndef
 
 def on_connect(tag):
     """Callback function called when an NFC tag is detected."""
     print("Tag detected!")
     
-    # Check if the tag is writable
     if not tag.ndef:
         print("Tag does not support NDEF.")
         return
-
+    
     # Data to write
     text_data = "Hello, NFC World!"
     
@@ -19,9 +17,12 @@ def on_connect(tag):
     # Create an NDEF message containing the text record
     ndef_message = nfc.ndef.Message(text_record)
 
-    # Write the NDEF message to the tag
-    tag.ndef.message = ndef_message
-    print(f"Data '{text_data}' written to the tag.")
+    try:
+        # Write the NDEF message to the tag
+        tag.ndef.message = ndef_message
+        print(f"Data '{text_data}' written to the tag.")
+    except Exception as e:
+        print(f"Failed to write data to tag: {e}")
 
 def main():
     try:
