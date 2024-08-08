@@ -24,7 +24,7 @@ def read_nfc(tag):
 def main():
     try:
         # Sambungkan ke NFC reader
-        clf = nfc.ContactlessFrontend('usb')
+        clf = nfc.ContactlessFrontend('pcsc')
         print("Waiting for NFC tag...")
         
         # Fungsi untuk membaca NFC tag
