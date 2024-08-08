@@ -1,31 +1,35 @@
-from nfc import ContactlessFrontend
-from time import sleep
+from py122u import nfc
 
-def connected(tag):
-    """Callback function when an NFC tag is detected."""
-    ident = ''.join('{:02x}'.format(b) for b in tag.identifier)
-    print(f"Tag ID: {ident}")
-    return False  # Return False to stop connection after tag is read
+reader = nfc.Reader()
+reader.connect()
 
-def main():
-    try:
-        # Initialize the NFC reader
-        clf = ContactlessFrontend('usb')
-        print("NFC reader initialized. Waiting for tags...")
-        
-        while True:
-            # Continuously look for NFC tags
-            clf.connect(rdwr={'on-connect': connected})
-            sleep(1)  # Sleep for 1 second to avoid busy-waiting
+reader.load_authentication_data(0x01, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
+reader.authentication(0x00, 0x61, 0x01)
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    
-    finally:
-        # Ensure the NFC reader is closed properly
-        if 'clf' in locals():
-            clf.close()
-            print("NFC reader connection closed.")
 
-if __name__ == "__main__":
-    main()
+def write(r, position, number, data):
+    while number >= 16:
+        write_16(r, position, 16, data)
+        number -= 16
+        position += 1
+
+
+def write_16(r, position, number, data):
+    r.update_binary_blocks(position, number, data)
+
+
+def read(r, position, number):
+    result = []
+    while number >= 16:
+        result.append(read_16(r, position, 16))
+        number -= 16
+        position += 1
+    return result
+
+
+def read_16(r, position, number):
+    return r.read_binary_blocks(position, number)
+
+
+write(reader, 0x01, 0x20, [0x00 for i in range(16)])
+print(read(reader, 0x01, 0x20))
